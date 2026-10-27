@@ -1,0 +1,30 @@
+services:
+  dbprueba7:
+    image: postgres:15-alpine
+    container_name: dbprueba7
+    environment:
+      POSTGRES_DB: basedatos7
+      POSTGRES_USER: usuario7
+      POSTGRES_PASSWORD: luna
+    ports:
+      - "5433:5432"
+    volumes:
+      - dbdata7:/var/lib/postgresql/data
+    networks:
+      - app7net
+
+  app7:
+    container_name: app7
+    build: .
+    networks:
+      - app7net
+    depends_on:
+      - dbprueba7
+
+volumes:
+  dbdata7:
+
+networks:
+  app7net:
+   driver: bridge
+

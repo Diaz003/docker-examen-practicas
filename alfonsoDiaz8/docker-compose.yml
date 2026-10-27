@@ -1,0 +1,34 @@
+services:
+
+  dbprueba8:
+    image: postgres:15-alpine
+    container_name: dbprueba8
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports: 
+      - "5434:5432"
+    volumes:
+      - dbdata8:/var/lib/postgresql/data
+    networks:
+      - app8net
+
+  app8:
+    build: .
+    container_name: app8
+    env_file: .env
+    volumes: 
+      - .:/app
+    networks:
+      - app8net
+    depends_on:
+      - dbprueba8
+
+volumes:
+  dbdata8:
+
+networks:
+  app8net:
+    driver: bridge

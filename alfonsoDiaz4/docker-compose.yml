@@ -1,0 +1,27 @@
+services:
+  dbprueba4:
+    image: mysql:8.0
+    container_name: dbprueba4
+    environment:
+      MYSQL_ROOT_PASSWORD: luna
+      MYSQL_DATABASE: basedatos4
+      MYSQL_USER: usuario4
+      MYSQL_PASSWORD: luna
+    ports:
+    - "3307:3306"
+    volumes:
+    - dbdata4:/var/lib/mysql
+    networks:
+    - app4net
+  app4:
+    build: .
+    container_name: app4
+    networks:
+    - app4net
+
+volumes:
+  dbdata4:
+
+networks:
+  app4net:
+    driver: bridge
